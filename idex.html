@@ -22,6 +22,8 @@
                 height: 100%;
                 color:white;
                 font-size: 50px;
+                opacity: 0;
+                transition: all .8s;
             }
             .item:nth-child(1){
                 background-color:black;
@@ -53,6 +55,7 @@
             }
 
             .item.active{
+                opacity: 1;
                 z-index:10;
             }
         </style>     
@@ -60,21 +63,59 @@
     <body>
         <div class="wrap">
             <ul class="list">
+                <li class="item active">0</li>
                 <li class="item">1</li>
                 <li class="item">2</li>
                 <li class="item">3</li>
                 <li class="item">4</li>
-                <li class="item">5</li>
             </ul>
             <button type="button" class="btn" id="goPre"><</button>
             <button type="button" class="btn" id="goNext">></button>
         </div>
         <script type="text/javascript">
             var items = document.getElementsByClassName('item');
-            var goPre = document.getElementById('goPre');
-            var goNext = document.getElementById('goNext');
+            var goPreBtn = document.getElementById('goPre');
+            var goNextBtn = document.getElementById('goNext');
 
             var index = 0;//index表示第几张图片在展示——>第index张图片有active这个类名
+
+            var clearActive = function(){
+                for(var i=0;i<items.length;i++){
+                    items[i].className = 'item';
+                }
+            }
+
+            var goIndex = function(){
+                clearActive();
+                items[index].className = 'item active';
+            }
+
+            var goNext = function(){
+                if(index<4){
+                    index++;
+                }else{
+                    index=0;
+                }
+                goIndex();
+            }
+
+            var goPre = function(){
+                if(index>0){
+                    index--;
+                }else{
+                    index=4;
+                }
+                goIndex();
+            }
+
+            goNextBtn.addEventListener('click',function(){
+                goNext();
+            })
+
+            goPreBtn.addEventListener('click',function(){
+                goPre();
+            })
+
         </script>
     </body>
 </html>
